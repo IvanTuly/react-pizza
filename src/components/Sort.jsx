@@ -1,17 +1,24 @@
 import React from "react";
+import { AppContext } from "../App";
 
 export default function Sort() {
+  //из useContext берем
+  const { sortType, setSortType } = React.useContext(AppContext);
+
   const [isVisible, setIsVisible] = React.useState(false);
   //список категорий
-  const list = ["популярности", "цене", "алфавиту"];
-  //индекс активной категории
-  const [activeCategory, setActiveCategory] = React.useState(0);
-  //отображение вида сортировки
-  const sortNameSelected = list[activeCategory];
+  const list = [
+    { name: "популярности ↑", sortProperty: "-rating" },
+    { name: "популярности ↓", sortProperty: "rating" },
+    { name: "цене ↑", sortProperty: "-price" },
+    { name: "цене ↓", sortProperty: "price" },
+    { name: "алафавиту ↑", sortProperty: "-title" },
+    { name: "алафавиту ↓", sortProperty: "title" },
+  ];
 
   //функция выбора вида сортировки
   const onClickListItem = (index) => {
-    setActiveCategory(index);
+    setSortType(index);
     setIsVisible(false);
   };
 
@@ -32,20 +39,22 @@ export default function Sort() {
         </svg>
         <b>Сортировка по:</b>
         {/* по клику открываем выпадающий список, значение отображаем по индексу массива с категориями */}
-        <span onClick={() => setIsVisible(!isVisible)}>{sortNameSelected}</span>
+        <span onClick={() => setIsVisible(!isVisible)}>{sortType.name}</span>
       </div>
       {/* условный рендеринг &&, будет показываться только если isVisible === true */}
       {isVisible && (
         <div className="sort__popup">
           <ul>
             {/* выводим все категории и по клику сохраняем индекс активной */}
-            {list.map((value, index) => (
+            {list.map((obj, index) => (
               <li
                 key={index}
-                onClick={() => onClickListItem(index)}
-                className={activeCategory === index ? "active" : ""}
+                onClick={() => onClickListItem(obj)}
+                className={
+                  sortType.sortProperty === obj.sortProperty ? "active" : ""
+                }
               >
-                {value}
+                {obj.name}
               </li>
             ))}
           </ul>

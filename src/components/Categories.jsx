@@ -1,12 +1,14 @@
 import React from "react";
+import { AppContext } from "../App";
 
 export default function Categories() {
-  const [activeCategory, setActiveCategory] = React.useState(0);
+  //из useContext берем функцию isItemAdded
+  const { categoryId, setCategoryId } = React.useContext(AppContext);
 
   const categories = ["All", "Meat", "Vegeterian", "Grill", "Hot", "Closed"];
 
   const onClickCategory = (index) => {
-    setActiveCategory(index);
+    setCategoryId(index);
   };
 
   return (
@@ -16,7 +18,7 @@ export default function Categories() {
           <li
             key={index}
             onClick={() => onClickCategory(index)}
-            className={activeCategory === index ? "active" : ""}
+            className={categoryId === index ? "active" : ""}
           >
             {value}
           </li>
