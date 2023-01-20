@@ -11,8 +11,6 @@ import Cart from "./pages/Cart";
 export const AppContext = React.createContext({});
 
 function App() {
-  //индекс активной категории сортировки
-  const [categoryId, setCategoryId] = React.useState(0);
   const [sortType, setSortType] = React.useState({
     name: "популярности",
     sortProperty: "rating",
@@ -23,8 +21,6 @@ function App() {
   return (
     <AppContext.Provider
       value={{
-        categoryId,
-        setCategoryId,
         sortType,
         setSortType,
         searchValue,
