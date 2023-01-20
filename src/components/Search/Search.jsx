@@ -1,20 +1,52 @@
 import React from "react";
+import debounce from "lodash.debounce";
+
 import { AppContext } from "../../App";
 import styles from "./Search.module.scss";
 
 export default function Search() {
-  const { searchValue, setSearchValue } = React.useContext(AppContext);
+  //локально храним  value  поиска
+  const [value, setValue] = React.useState("");
+  const { setSearchValue } = React.useContext(AppContext);
+  //useRef - хук для работы c dom элементами через react - с помощью него получим input объект
+  //чтобы работало передаем inputRef в ref input
+  const inputRef = React.useRef();
+
+  const onClickClear = () => {
+    setSearchValue("");
+    setValue("");
+    //через переменную inputRef ставим focus на input
+    inputRef.current.focus();
+  };
+
+  //useCallback похож на useEffect, но если 2й просто вызывает функцию, при заданных условиях (прим. [] - первый рендер), то useCallBack возвращает ту же самую функцию
+  //по сути сохранили ссылку на функцию и сделали ее отложенной
+  const updateSearchValue = React.useCallback(
+    debounce((str) => {
+      setSearchValue(str);
+    }, 250),
+    []
+  );
+
+  const onChangeInput = (event) => {
+    //каждый раз меняем input
+    setValue(event.target.value);
+    //но эта функция будет срабатывать с задержкой
+    updateSearchValue(event.target.value);
+  };
+
   return (
     <div className={styles.root}>
       <input
-        onChange={(event) => setSearchValue(event.target.value)}
+        ref={inputRef}
+        onChange={(event) => onChangeInput(event)}
         placeholder="Search Pizza"
-        value={searchValue}
+        value={value}
       />
-      {searchValue && (
+      {value && (
         <svg
           className={styles.clearIcon}
-          onClick={() => setSearchValue("")}
+          onClick={() => onClickClear()}
           width="28"
           height="28"
           viewBox="0 0 28 28"

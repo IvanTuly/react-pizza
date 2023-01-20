@@ -3,23 +3,24 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { setSortType } from "../redux/slices/filterSlice";
 
+//список категорий
+export const sortList = [
+  { name: "популярности ↑", sortProperty: "-rating" },
+  { name: "популярности ↓", sortProperty: "rating" },
+  { name: "цене ↑", sortProperty: "-price" },
+  { name: "цене ↓", sortProperty: "price" },
+  { name: "алафавиту ↑", sortProperty: "-title" },
+  { name: "алафавиту ↓", sortProperty: "title" },
+];
+
 export default function Sort() {
   const dispatch = useDispatch();
 
   const sortType = useSelector((state) => state.filter.sort);
 
   const [isVisible, setIsVisible] = React.useState(false);
-  //список категорий
-  const list = [
-    { name: "популярности ↑", sortProperty: "-rating" },
-    { name: "популярности ↓", sortProperty: "rating" },
-    { name: "цене ↑", sortProperty: "-price" },
-    { name: "цене ↓", sortProperty: "price" },
-    { name: "алафавиту ↑", sortProperty: "-title" },
-    { name: "алафавиту ↓", sortProperty: "title" },
-  ];
 
-  //функция выбора вида сортировки
+  //функция выбора вида сортировки когда выбрали - закрываем отображение сортировки
   const onClickListItem = (obj) => {
     dispatch(setSortType(obj));
     setIsVisible(false);
@@ -49,7 +50,7 @@ export default function Sort() {
         <div className="sort__popup">
           <ul>
             {/* выводим все категории и по клику сохраняем индекс активной */}
-            {list.map((obj, index) => (
+            {sortList.map((obj, index) => (
               <li
                 key={index}
                 onClick={() => onClickListItem(obj)}
