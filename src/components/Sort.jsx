@@ -1,9 +1,12 @@
 import React from "react";
-import { AppContext } from "../App";
+import { useSelector, useDispatch } from "react-redux";
+
+import { setSortType } from "../redux/slices/filterSlice";
 
 export default function Sort() {
-  //из useContext берем
-  const { sortType, setSortType } = React.useContext(AppContext);
+  const dispatch = useDispatch();
+
+  const sortType = useSelector((state) => state.filter.sort);
 
   const [isVisible, setIsVisible] = React.useState(false);
   //список категорий
@@ -17,8 +20,8 @@ export default function Sort() {
   ];
 
   //функция выбора вида сортировки
-  const onClickListItem = (index) => {
-    setSortType(index);
+  const onClickListItem = (obj) => {
+    dispatch(setSortType(obj));
     setIsVisible(false);
   };
 

@@ -19,14 +19,19 @@ export const filterSlice = createSlice({
     //функция изменения id категории сортировки (метод)
     //метод при вызове получит state и действие, при обращении мы передаем только action, redux toolkit сам добавит state
     setCategoryId(state, action) {
+      console.log(action);
       //любое значение хранится не в самом action, а в action.payload
       state.categoryId = action.payload;
+    },
+    setSortType(state, action) {
+      state.sort.name = action.payload.name;
+      state.sort.sortProperty = action.payload.sortProperty;
     },
   },
 });
 
 //вытаскиваем методы изменения состояния, для экспорта. Чтобы получить методы надо обращаться к actions, а не к redusers, хоть они и лежат там
-export const { setCategoryId } = filterSlice.actions;
+export const { setCategoryId, setSortType } = filterSlice.actions;
 
 //выполняет логику обработки всего стейта - отвечает за измемнения стейта
 export default filterSlice.reducer;

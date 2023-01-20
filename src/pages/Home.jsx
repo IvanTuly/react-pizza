@@ -15,10 +15,11 @@ function Home() {
   //useSelector - отвечает за вытаскивание данных из хранилища, что-то типо useContect(немного похоже по сути)
   //useDispatch - хук который позволяет что-то сделать - наример, обратиться к действиям
 
-  //с помощбю функции вытаскиваем из state только то, что нам нужно .filter.categoryId
+  //с помощью функции вытаскиваем из state только то, что нам нужно .filter.categoryId
   const categoryId = useSelector((state) => state.filter.categoryId);
+  const sortType = useSelector((state) => state.filter.sort);
 
-  const { searchValue, sortType } = React.useContext(AppContext);
+  const { searchValue } = React.useContext(AppContext);
   //массив для хранения пицц
   const [items, setItems] = React.useState([]);
   //отслеживаем загрузку страницы, чтобы выводить скелетон

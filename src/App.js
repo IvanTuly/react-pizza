@@ -11,18 +11,11 @@ import Cart from "./pages/Cart";
 export const AppContext = React.createContext({});
 
 function App() {
-  const [sortType, setSortType] = React.useState({
-    name: "популярности",
-    sortProperty: "rating",
-  });
-
   const [searchValue, setSearchValue] = React.useState("");
 
   return (
     <AppContext.Provider
       value={{
-        sortType,
-        setSortType,
         searchValue,
         setSearchValue,
       }}
