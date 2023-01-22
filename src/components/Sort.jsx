@@ -14,8 +14,10 @@ export const sortList = [
 ];
 
 export default function Sort() {
-  const dispatch = useDispatch();
+  //ссылка на dom элемент сортировки, будем использовать чтобы скрывать при клике на страницу
+  const sortRef = React.useRef();
 
+  const dispatch = useDispatch();
   const sortType = useSelector((state) => state.filter.sort);
 
   const [isVisible, setIsVisible] = React.useState(false);
@@ -26,8 +28,25 @@ export default function Sort() {
     setIsVisible(false);
   };
 
+  //при первом рэндере страницы вешаем eventListener на body, иначе ни как, птому что в компоненте мы имеем доступ только к sort
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      //если не было клика на sort, то скрываем sort
+      if (!event.composedPath().includes(sortRef.current)) {
+        setIsVisible(false);
+      }
+    };
+
+    document.body.addEventListener("click", handleClickOutside);
+
+    //если компонент удалится со страницы, то мы должны удалить обработчик событий с body, иначе при последующем открытии страницы мы получим уже 2 обработика  на body
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"

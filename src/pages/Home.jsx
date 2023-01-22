@@ -13,6 +13,8 @@ import Categories from "../components/Categories";
 import { AppContext } from "../App";
 import Pagination from "../components/Pagination/Pagination";
 import { setCurrentPage, setFilters } from "../redux/slices/filterSlice";
+import { fetchPizzas } from "../redux/slices/pizzasSlice";
+import Skeleton from "../components/Skeleton";
 
 function Home() {
   //переменная для проверки необходимости делать поиск через url
@@ -28,16 +30,18 @@ function Home() {
   const dispatch = useDispatch();
   //с помощью функции вытаскиваем из state только то, что нам нужно .filter использую деструктуризация вытаскиваем сразу sort и categoryId
 
+  //массив для хранения пицц
+  const { items, status } = useSelector((state) => state.pizza);
+
   const { categoryId, sort, currentPage } = useSelector(
     (state) => state.filter
   );
   const sortType = sort;
 
   const { searchValue } = React.useContext(AppContext);
-  //массив для хранения пицц
-  const [items, setItems] = React.useState([]);
+
   //отслеживаем загрузку страницы, чтобы выводить скелетон
-  const [isLoading, setIsLoading] = React.useState(true);
+  // const [isLoading, setIsLoading] = React.useState(true);
 
   const onChangePage = (number) => {
     dispatch(setCurrentPage(number));
@@ -85,37 +89,27 @@ function Home() {
     }
   }, []);
 
-  const fetchPizzas = () => {
-    //создаем асинхронную функцию, чтобы вызывать await просто в useEffect-нельзя
-    async function fetchData() {
-      setIsLoading(true);
-      try {
-        //убираем минусы из видов сортировки
-        const sort = sortType.sortProperty.replace("-", "");
-        //по минусу определяем сортируем по возрастанию или убываниб
-        const order = sortType.sortProperty.includes("-") ? "ask" : "desc";
+  const getPizzas = async () => {
+    //убираем минусы из видов сортировки
+    const sort = sortType.sortProperty.replace("-", "");
+    //по минусу определяем сортируем по возрастанию или убываниб
+    const order = sortType.sortProperty.includes("-") ? "ask" : "desc";
 
-        //если в категории есть цифра >0 - выводим категорию. если 0 - выводим все пиццы
-        const searchCategory = categoryId > 0 ? `category=${categoryId}` : "";
+    //если в категории есть цифра >0 - выводим категорию. если 0 - выводим все пиццы
+    const searchCategory = categoryId > 0 ? `category=${categoryId}` : "";
 
-        const itemsResponse = await axios.get(
-          //в mockApi плохо работает поиск, поэтому можно искать только по всем пиццам, поэтому если ищем - то без категории
-          searchValue === ""
-            ? `https://63c907a2904f040a96549005.mockapi.io/pizzas?page=${currentPage}&limit=4&${searchCategory}&sortBy=${sort}&order=${order}`
-            : `https://63c907a2904f040a96549005.mockapi.io/pizzas?page=${currentPage}&limit=4&search=${searchValue}&sortBy=${sort}&order=${order}`
-        );
+    const search = searchValue ? `&search=${searchValue}` : "";
 
-        //записываем ответ в массив пиц
-        setItems(Object.values(itemsResponse.data));
-
-        setIsLoading(false);
-      } catch (error) {
-        alert("Unable to load data" + error);
-        console.log(error);
-      }
-    }
-
-    fetchData();
+    //внутри redux мы запрашиваем пиццы и отлавливаем ошибки
+    dispatch(
+      fetchPizzas({
+        sort,
+        order,
+        searchCategory,
+        search,
+        currentPage,
+      })
+    );
   };
 
   //используем, чтобы отправить запрос только один раз при загрузке страницы
@@ -127,7 +121,7 @@ function Home() {
 
     //проверяем надо ли делать запрос стандартных параметров из redux filterSlise или из url
     if (!isSearch.current) {
-      fetchPizzas();
+      getPizzas();
     }
     isSearch.current = false;
   }, [categoryId, sortType, searchValue, currentPage]);
@@ -142,19 +136,32 @@ function Home() {
     return false;
   });
 
+  const pizzaItems = pizzas.map((obj, index) => (
+    <PizzaBlock key={index} {...obj} />
+  ));
+  const skeletons = [...Array(8)].map((_, index) => <Skeleton key={index} />);
+
   return (
     <div className="container">
       <div className="content__top">
         <Categories />
-
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
-        {(isLoading ? [...Array(8)] : pizzas).map((obj, index) => (
-          <PizzaBlock key={index} isLoading={isLoading} {...obj} />
-        ))}
-      </div>
+      {status === "error" ? (
+        // если будет ошибка рендерим ошибку, если ошибки нет, то загрузка или пиццы
+        <div className="content__error-info">
+          <h2>Error connection</h2>
+          <p>
+            Unable to load pizza.
+            <br /> Please, try to send request later
+          </p>
+        </div>
+      ) : (
+        <div className="content__items">
+          {status === "loading" ? skeletons : pizzaItems}
+        </div>
+      )}
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   );
