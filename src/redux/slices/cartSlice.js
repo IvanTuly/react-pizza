@@ -70,6 +70,15 @@ export const cartSlice = createSlice({
   },
 });
 
+//создаем селектор - именовання функция, которую будет удобнее использовать в компонентах и вместо "(state) => state.cart" писать просто "selectCart"
+export const selectCart = (state) => state.cart;
+
+//селектор для подсчета сколько раз пицца добавлена в корзину, при подсчете учитываем разные размеры пицц и складываем в общую сумму. функция получает id вызывает стелочную функцию и возвращает количество пицц
+export const selectCartItemById = (id) => (state) =>
+  state.cart.items
+    .filter((obj) => obj.id === id)
+    .reduce((sum, obj) => obj.count + sum, 0);
+
 //вытаскиваем методы изменения состояния, для экспорта. Чтобы получить методы надо обращаться к actions, а не к redusers, хоть они и лежат там
 export const { addItem, plusItem, minusItem, removeItem, clearItems } =
   cartSlice.actions;

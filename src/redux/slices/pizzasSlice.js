@@ -3,9 +3,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 //отправляем запрос отдельным асинхронным экшеном
 //"pizza/fetchPizzasStatus" - указыавем больше для redux
+//вторым параметром передаем thunkApi - например можно вытщить функцию dispatch и вызвать их отсюда или getState() - которая позволяет получить текущий стейт
 export const fetchPizzas = createAsyncThunk(
   "pizza/fetchPizzasStatus",
-  async (params) => {
+  async (params, thunkApi) => {
     const { sort, order, searchCategory, search, currentPage } = params;
     const response = await axios.get(
       //в mockApi плохо работает поиск, поэтому можно искать только по всем пиццам, поэтому если ищем - то без категории

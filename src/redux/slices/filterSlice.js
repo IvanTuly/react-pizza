@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 //initialState - инициализируемое состояние, по умолчанию
 //храним id категории и объект сортировки
 const initialState = {
+  searchValue: "",
   categoryId: 0,
   currentPage: 1,
   sort: {
@@ -23,6 +24,9 @@ export const filterSlice = createSlice({
       //любое значение хранится не в самом action, а в action.payload
       state.categoryId = action.payload;
     },
+    setSearchValue(state, action) {
+      state.searchValue = action.payload;
+    },
     setCurrentPage(state, action) {
       state.currentPage = action.payload;
     },
@@ -39,8 +43,13 @@ export const filterSlice = createSlice({
 });
 
 //вытаскиваем методы изменения состояния, для экспорта. Чтобы получить методы надо обращаться к actions, а не к redusers, хоть они и лежат там
-export const { setCategoryId, setSortType, setCurrentPage, setFilters } =
-  filterSlice.actions;
+export const {
+  setCategoryId,
+  setSortType,
+  setCurrentPage,
+  setFilters,
+  setSearchValue,
+} = filterSlice.actions;
 
 //выполняет логику обработки всего стейта - отвечает за измемнения стейта
 export default filterSlice.reducer;

@@ -1,6 +1,6 @@
 //добавить сортировку, в firebase api нет, но можно сделать с помощью js, сразу после получения массива так же в firebaseApi нет поиска. может использовать для пицц mockApi
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import qs from "qs";
 
@@ -33,12 +33,10 @@ function Home() {
   //массив для хранения пицц
   const { items, status } = useSelector((state) => state.pizza);
 
-  const { categoryId, sort, currentPage } = useSelector(
+  const { categoryId, sort, currentPage, searchValue } = useSelector(
     (state) => state.filter
   );
   const sortType = sort;
-
-  const { searchValue } = React.useContext(AppContext);
 
   //отслеживаем загрузку страницы, чтобы выводить скелетон
   // const [isLoading, setIsLoading] = React.useState(true);
@@ -137,7 +135,9 @@ function Home() {
   });
 
   const pizzaItems = pizzas.map((obj, index) => (
-    <PizzaBlock key={index} {...obj} />
+    <Link key={index} to={`/pizza/${obj.id}`}>
+      <PizzaBlock {...obj} />
+    </Link>
   ));
   const skeletons = [...Array(8)].map((_, index) => <Skeleton key={index} />);
 

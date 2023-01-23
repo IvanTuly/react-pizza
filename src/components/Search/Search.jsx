@@ -1,29 +1,32 @@
 import React from "react";
 import debounce from "lodash.debounce";
 
-import { AppContext } from "../../App";
 import styles from "./Search.module.scss";
+import { useDispatch } from "react-redux";
+import { setSearchValue } from "../../redux/slices/filterSlice";
 
 export default function Search() {
+  const dispatch = useDispatch();
+
   //локально храним  value  поиска
   const [value, setValue] = React.useState("");
-  const { setSearchValue } = React.useContext(AppContext);
+
   //useRef - хук для работы c dom элементами через react - с помощью него получим input объект
   //чтобы работало передаем inputRef в ref input
   const inputRef = React.useRef();
 
   const onClickClear = () => {
-    setSearchValue("");
+    dispatch(setSearchValue(""));
     setValue("");
     //через переменную inputRef ставим focus на input
     inputRef.current.focus();
   };
 
   //useCallback похож на useEffect, но если 2й просто вызывает функцию, при заданных условиях (прим. [] - первый рендер), то useCallBack возвращает ту же самую функцию
-  //по сути сохранили ссылку на функцию и сделали ее отложенной
+  //по сути сохранили ссылку на функцию и сделали ее отложенной при помощи debounce, задержка 250мс
   const updateSearchValue = React.useCallback(
     debounce((str) => {
-      setSearchValue(str);
+      dispatch(setSearchValue(str));
     }, 250),
     []
   );

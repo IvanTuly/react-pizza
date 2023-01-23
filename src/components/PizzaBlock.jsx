@@ -1,8 +1,8 @@
 import React from "react";
-import ContentLoader from "react-content-loader";
+
 import { useDispatch, useSelector } from "react-redux";
 
-import { addItem } from "../redux/slices/cartSlice";
+import { addItem, selectCartItemById } from "../redux/slices/cartSlice";
 
 const typeNames = ["Тонкое", "Традиционное"];
 
@@ -19,12 +19,8 @@ export default function PizzaBlock({
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
 
-  //подсчитываем сколько раз пицца добавлена в корзину
-  const cartItem = useSelector((state) =>
-    state.cart.items
-      .filter((obj) => obj.id === id)
-      .reduce((sum, obj) => obj.count + sum, 0)
-  );
+  //подсчитываем сколько раз пицца добавлена в корзину, логика вынесена в селектор внутри redux мы лишь передаем id
+  const cartItem = useSelector(selectCartItemById(id));
 
   // const cartItem = useSelector((state) =>
   //   state.cart.items.find((obj) => obj.id === id)
