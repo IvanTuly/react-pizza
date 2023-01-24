@@ -10,7 +10,7 @@ export const fetchPizzas = createAsyncThunk(
     const { sort, order, searchCategory, search, currentPage } = params;
     const response = await axios.get(
       //в mockApi плохо работает поиск, поэтому можно искать только по всем пиццам, поэтому если ищем - то без категории
-      `https://63c907a2904f040a96549005.mockapi.io/pizzas?${search}&page=${currentPage}&limit=4&${searchCategory}&sortBy=${sort}&order=${order}`
+      `https://63c907a2904f040a96549005.mockapi.io/pizzas?${search}&page=${currentPage}&limit=8&${searchCategory}&sortBy=${sort}&order=${order}`
     );
     return response.data;
   }

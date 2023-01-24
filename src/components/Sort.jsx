@@ -5,12 +5,12 @@ import { setSortType } from "../redux/slices/filterSlice";
 
 //список категорий
 export const sortList = [
-  { name: "популярности ↑", sortProperty: "-rating" },
-  { name: "популярности ↓", sortProperty: "rating" },
-  { name: "цене ↑", sortProperty: "-price" },
-  { name: "цене ↓", sortProperty: "price" },
-  { name: "алафавиту ↑", sortProperty: "-title" },
-  { name: "алафавиту ↓", sortProperty: "title" },
+  { name: "popularity ↑", sortProperty: "-rating" },
+  { name: "popularity ↓", sortProperty: "rating" },
+  { name: "price ↑", sortProperty: "-price" },
+  { name: "price ↓", sortProperty: "price" },
+  { name: "abc ↑", sortProperty: "-title" },
+  { name: "abc ↓", sortProperty: "title" },
 ];
 
 export default function Sort() {
@@ -60,7 +60,7 @@ export default function Sort() {
             fill="#2C2C2C"
           />
         </svg>
-        <b>Сортировка по:</b>
+        <b>Sort by:</b>
         {/* по клику открываем выпадающий список, значение отображаем по индексу массива с категориями */}
         <span onClick={() => setIsVisible(!isVisible)}>{sortType.name}</span>
       </div>

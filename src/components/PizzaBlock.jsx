@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 
 import { addItem, selectCartItemById } from "../redux/slices/cartSlice";
 
-const typeNames = ["Тонкое", "Традиционное"];
+const typeNames = ["Thin", "Traditional"];
 
 export default function PizzaBlock({
   id,
@@ -22,9 +23,6 @@ export default function PizzaBlock({
   //подсчитываем сколько раз пицца добавлена в корзину, логика вынесена в селектор внутри redux мы лишь передаем id
   const cartItem = useSelector(selectCartItemById(id));
 
-  // const cartItem = useSelector((state) =>
-  //   state.cart.items.find((obj) => obj.id === id)
-  // );
   const addedCount = cartItem ? cartItem : 0;
 
   const onClickAdd = () => {
@@ -47,7 +45,9 @@ export default function PizzaBlock({
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        <Link key={id} to={`/pizza/${id}`}>
+          <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        </Link>
         <h4 className="pizza-block__title">{title}</h4>
         <div className="pizza-block__selector">
           <ul>
@@ -68,13 +68,13 @@ export default function PizzaBlock({
                 onClick={() => setActiveSize(index)}
                 className={activeSize === index ? "active" : ""}
               >
-                {size} см.
+                {size} cm.
               </li>
             ))}
           </ul>
         </div>
         <div className="pizza-block__bottom">
-          <div className="pizza-block__price">от {price} ₽</div>
+          <div className="pizza-block__price">from {price} $</div>
           <div
             onClick={onClickAdd}
             className="button button--outline button--add"
@@ -91,7 +91,7 @@ export default function PizzaBlock({
                 fill="white"
               />
             </svg>
-            <span>Добавить</span>
+            <span>Add</span>
             {addedCount > 0 && <i>{addedCount}</i>}
           </div>
         </div>

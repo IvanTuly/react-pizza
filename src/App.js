@@ -7,7 +7,7 @@ import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import Cart from "./pages/Cart";
-import FullPizza from "./pages/FullPizza";
+import FullPizza from "./pages/FullPizza/FullPizza";
 
 export const AppContext = React.createContext({});
 

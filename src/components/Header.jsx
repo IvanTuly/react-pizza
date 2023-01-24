@@ -22,7 +22,7 @@ export default function Header() {
             <img width="38" src="img/pizza-logo.svg" alt="Pizza logo" />
             <div>
               <h1>React Pizza</h1>
-              <p>самая вкусная пицца во вселенной</p>
+              <p>the most delicious pizza</p>
             </div>
           </div>
         </Link>
@@ -32,7 +32,7 @@ export default function Header() {
 
             <div className="header__cart">
               <Link to="/cart" className="button button--cart">
-                <span>{totalPrice} ₽</span>
+                <span>{totalPrice.toFixed(2)} $</span>
                 <div className="button__delimiter"></div>
                 <svg
                   width="18"

@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+import styles from "./FullPizza.module.scss";
+
 export default function FullPizza() {
   //вытаскиваем из url динамический параметр, мы задали параметр как id в app.js
   const params = useParams();
@@ -27,15 +29,25 @@ export default function FullPizza() {
   }, []);
 
   if (!pizza) {
-    return "Загрузка...";
+    return "Loading...";
   }
 
   return (
     <div className="container">
-      <img src={pizza.imageUrl} />
-      <h2>{pizza.title} </h2>
-      <p>Ingridients</p>
-      <div>{pizza.price}</div>
+      <div className={styles.pizza}>
+        <img className={styles.image} src={pizza.imageUrl} />
+        <div className={styles.pizza_info}>
+          <h2>{pizza.title} </h2>
+          <p>Ingredients:</p>
+          {pizza.ingredients.map((ingredient) => (
+            <div className={styles.ingredients}>• {ingredient}</div>
+          ))}
+          <div className={styles.price}>
+            <div>Price:</div>
+            <div>{pizza.price} $</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

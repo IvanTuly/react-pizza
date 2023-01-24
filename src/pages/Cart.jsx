@@ -51,7 +51,7 @@ function Cart() {
                 strokeLinejoin="round"
               ></path>
             </svg>
-            Корзина
+            Cart
           </h2>
           <div onClick={onClickClear} className="cart__clear">
             <svg
@@ -91,7 +91,7 @@ function Cart() {
               ></path>
             </svg>
 
-            <span>Очистить корзину</span>
+            <span>Remove all</span>
           </div>
         </div>
         <div className="content__items">
@@ -103,11 +103,11 @@ function Cart() {
           <div className="cart__bottom-details">
             <span>
               {" "}
-              Всего пицц: <b>{totalCount} шт.</b>{" "}
+              Total pizzas: <b>{totalCount} </b>{" "}
             </span>
             <span>
               {" "}
-              Сумма заказа: <b>{totalPrice} ₽</b>{" "}
+              Total price: <b>{totalPrice.toFixed(1)} $</b>{" "}
             </span>
           </div>
           <div className="cart__bottom-buttons">
@@ -131,10 +131,10 @@ function Cart() {
                 ></path>
               </svg>
 
-              <span>Вернуться назад</span>
+              <span>Go back</span>
             </Link>
             <div className="button pay-btn">
-              <span>Оплатить сейчас</span>
+              <span>Pay</span>
             </div>
           </div>
         </div>

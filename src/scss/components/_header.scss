@@ -30,7 +30,7 @@
     }
   }
 
-  @media (max-width: 645px) {
+  @media (max-width: 840px) {
     padding: 20px 0;
     .container {
       flex-direction: column;
@@ -38,6 +38,10 @@
 
     &__logo {
       margin: 0 0 10px 0;
+    }
+
+    &__cart {
+      margin: 10px 0 0 0;
     }
   }
 }

@@ -101,6 +101,11 @@ body {
       margin: 0;
     }
   }
+  @media (max-width: 750px) {
+    &--cart {
+      margin: 10px auto;
+    }
+  }
 }
 
 .cart {
@@ -203,6 +208,7 @@ body {
 
     &-count {
       display: flex;
+      flex-grow: 1;
       align-items: center;
       justify-content: space-between;
       width: 13%;
@@ -222,6 +228,7 @@ body {
 
     &-price {
       display: flex;
+      flex-grow: 1;
       align-items: center;
       justify-content: center;
       width: 33%;
@@ -235,6 +242,7 @@ body {
 
     &-remove {
       display: flex;
+      flex-grow: 1;
       align-items: center;
       justify-content: flex-end;
       width: 4%;
@@ -262,6 +270,50 @@ body {
           border-color: darken($color: $gray-line, $amount: 80);
           background-color: darken($color: $gray-line, $amount: 80);
         }
+      }
+    }
+    &-dynamic {
+      display: flex;
+      flex-grow: 1;
+    }
+
+    @media (max-width: 750px) {
+      flex-direction: column;
+      align-items: center;
+
+      &-img {
+        width: 280px;
+        height: 280px;
+        margin-right: 0;
+        img {
+          width: 280px;
+          height: 280px;
+        }
+      }
+
+      &-info {
+        width: 300px;
+        text-align: center;
+        margin: 10px 0;
+      }
+
+      &-dynamic {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 300px;
+      }
+      &-remove {
+        order: 3;
+        max-width: 70px;
+      }
+      &-price {
+        order: 1;
+        max-width: 100px;
+      }
+      &-count {
+        order: 2;
+        max-width: 120px;
       }
     }
   }
@@ -364,6 +416,12 @@ body {
       margin: 0 auto;
       font-weight: 600;
       font-size: 18px;
+    }
+
+    @media (max-width: 600px) {
+      margin: 0 auto;
+      width: 400px;
+      text-align: center;
     }
   }
 }

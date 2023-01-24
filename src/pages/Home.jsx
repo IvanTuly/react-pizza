@@ -134,11 +134,7 @@ function Home() {
     return false;
   });
 
-  const pizzaItems = pizzas.map((obj, index) => (
-    <Link key={index} to={`/pizza/${obj.id}`}>
-      <PizzaBlock {...obj} />
-    </Link>
-  ));
+  const pizzaItems = pizzas.map((obj, index) => <PizzaBlock {...obj} />);
   const skeletons = [...Array(8)].map((_, index) => <Skeleton key={index} />);
 
   return (
@@ -147,7 +143,7 @@ function Home() {
         <Categories />
         <Sort />
       </div>
-      <h2 className="content__title">Все пиццы</h2>
+      <h2 className="content__title">All pizzas</h2>
       {status === "error" ? (
         // если будет ошибка рендерим ошибку, если ошибки нет, то загрузка или пиццы
         <div className="content__error-info">
