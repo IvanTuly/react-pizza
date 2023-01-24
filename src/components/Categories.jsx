@@ -1,5 +1,4 @@
 import React from "react";
-import { AppContext } from "../App";
 import { useSelector, useDispatch } from "react-redux";
 
 import { setCategoryId } from "../redux/slices/filterSlice";

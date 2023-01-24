@@ -17,12 +17,12 @@ function App() {
       <Header />
       <div className="content">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/react-pizza/" element={<Home />} />
+          <Route path="/react-pizza/cart" element={<Cart />} />
           {/* :id - динамический параметр, чтобы различать пиццы*/}
-          <Route path="/pizza/:id" element={<FullPizza />} />
+          <Route path="/react-pizza/pizza/:id" element={<FullPizza />} />
           {/* устанавливаем путь * для всех путей отличных от заданных - это будет страница not found */}
-          <Route path="*" element={<NotFound />} />
+          <Route path="/react-pizza/*" element={<NotFound />} />
         </Routes>
       </div>
     </div>

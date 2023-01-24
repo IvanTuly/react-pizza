@@ -1,7 +1,6 @@
 //добавить сортировку, в firebase api нет, но можно сделать с помощью js, сразу после получения массива так же в firebaseApi нет поиска. может использовать для пицц mockApi
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import qs from "qs";
 
 import { useSelector, useDispatch } from "react-redux";

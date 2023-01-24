@@ -45,7 +45,7 @@ export default function PizzaBlock({
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <Link key={id} to={`/pizza/${id}`}>
+        <Link key={id} to={`/react-pizza/pizza/${id}`}>
           <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
         </Link>
         <h4 className="pizza-block__title">{title}</h4>

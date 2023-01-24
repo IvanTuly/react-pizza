@@ -14,7 +14,7 @@ export default function CartEmpty() {
           To order pizza, go to the main page.
         </p>
         <img src="/img/empty-cart.png" alt="Empty cart" />
-        <Link to="/" className="button button--black">
+        <Link to="/react-pizza/" className="button button--black">
           <span>Come back</span>
         </Link>
       </div>
